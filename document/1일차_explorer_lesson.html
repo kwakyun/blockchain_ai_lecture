@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[교육용] 블록 익스플로러 트랜잭션 분석 실습</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #ea580c;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+        h1 { margin: 0; color: #0f172a; font-size: 24px; }
+        p.subtitle { margin: 5px 0 0 0; color: #64748b; font-size: 14px; }
+        
+        /* 메인 레이아웃 */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+        /* 카드 공통 스타일 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 1. 가상 블록 익스플로러 화면 */
+        .explorer-screen {
+            background-color: #ffffff;
+        }
+        .tx-header {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            word-break: break-all;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        .tx-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .tx-row:last-child { border-bottom: none; }
+        .label { font-weight: 600; color: #475569; width: 100px; }
+        .value { font-family: monospace; color: #0f172a; word-break: break-all; text-align: right; flex: 1; }
+        
+        /* 상태 배지 */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge-success { background-color: #dcfce7; color: var(--success); }
+        .badge-danger { background-color: #fee2e2; color: var(--danger); }
+
+        /* 2. 강사용 가이드 및 제어 패널 */
+        .guide-panel { background-color: #ffffff; }
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 요소 하이라이트 효과 */
+        .highlight {
+            animation: pulse 1.5s infinite;
+            background-color: #fef08a !important;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* 컨트롤 버튼 */
+        .btn-box { display: flex; gap: 10px; margin-top: 15px; }
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: background 0.2s;
+        }
+        .btn-normal { background-color: var(--primary); }
+        .btn-danger { background-color: var(--danger); }
+        .btn-success { background-color: var(--success); }
+        
+        ul { padding-left: 20px; margin: 8px 0; }
+        li { margin-bottom: 6px; }
+        .box-info {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            border-radius: 0 6px 6px 0;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🖥️ 블록 익스플로러 트랜잭션 분석 실습 시뮬레이터</h1>
+        <p class="subtitle">From, To, Value, Fee, Status 구조의 입력·처리·출력 가시화 툴</p>
+    </header>
+
+    <div class="grid">
+        <!-- 왼쪽: 가상 블록 익스플로러 UI -->
+        <div class="card explorer-screen">
+            <div class="card-title">🔍 Block Explorer (가상 조회 화면)</div>
+            <div class="tx-header">
+                <strong>Transaction Hash:</strong><br>
+                0x7a8c3d9e2f1b4a5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c
+            </div>
+            
+            <div class="tx-body">
+                <div class="tx-row" id="row-status">
+                    <span class="label">Status</span>
+                    <span class="value" id="val-status"><span class="badge badge-success">Success</span></span>
+                </div>
+                <div class="tx-row" id="row-from">
+                    <span class="label">From (송신)</span>
+                    <span class="value" id="val-from">0x9BA2...F34Cd (학생 지갑)</span>
+                </div>
+                <div class="tx-row" id="row-to">
+                    <span class="label">To (수신)</span>
+                    <span class="value" id="val-to">0x2A1b...789Ef (자격인증 스마트 계약)</span>
+                </div>
+                <div class="tx-row" id="row-value">
+                    <span class="label">Value (금액)</span>
+                    <span class="value" id="val-value">0.05 ETH</span>
+                </div>
+                <div class="tx-row" id="row-fee">
+                    <span class="label">Tx Fee (수수료)</span>
+                    <span class="value" id="val-fee">0.0021 ETH</span>
+                </div>
+            </div>
+
+            <!-- 시연용 흐름 오버레이 및 알림 박스 -->
+            <div id="status-alert" class="box-info" style="margin-top:25px; background-color:#f8fafc; border-left-color:#cbd5e1;">
+                💡 우측 상단의 강사 가이드 탭 순서대로 시연을 진행해 주세요.
+            </div>
+        </div>
+
+        <!-- 오른쪽: 강사용 교수 가이드 및 컨트롤 패널 -->
+        <div class="card guide-panel">
+            <div class="card-title">👨‍🏫 수업 진행 가이드 (단계별 탭)</div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'step1')">1. 관찰항목 제시</button>
+                <button class="tab-btn" onclick="openTab(event, 'step2')">2. 입·처·출 분리</button>
+                <button class="tab-btn" onclick="openTab(event, 'step3')">3. 의도적 오류시연</button>
+                <button class="tab-btn" onclick="openTab(event, 'step4')">4. 학생 재설명</button>
+            </div>
+
+            <!-- 1단계: 관찰항목 제시 -->
+            <div id="step1" class="tab-content active">
+                <h3>📌 시연 전 학습자 관찰 항목 (3가지)</h3>
+                <p>화면을 보여주기 전, 학습자들에게 다음 항목을 노트에 적고 집중하여 보라고 안내하세요:</p>
+                <ul>
+                    <li><strong>관찰 1:</strong> 수수료(Fee)는 트랜잭션이 성공했든 실패했든 무조건 차감되는가?</li>
+                    <li><strong>관찰 2:</strong> From(송신자)과 To(수신자) 주소 중 실제 블록체인 상의 계약 주소는 어느 것인가?</li>
+                    <li><strong>관찰 3:</strong> Status가 변경될 때 어떤 값들이 상호작용하여 결과에 영향을 주는가?</li>
+                </ul>
+                <div class="btn-box">
+                    <button class="btn btn-normal" onclick="highlightFields(['row-from', 'row-to', 'row-value', 'row-fee', 'row-status'])">주요 요소 위치 안내하기</button>
+                </div>
+            </div>
+
+            <!-- 2단계: 입력, 처리, 출력 분리 -->
+            <div id="step2" class="tab-content">
+                <h3>⚙️ 데이터 아키텍처 설명 (입·처·출)</h3>
+                <p>각 요소를 클릭하여 구조적 역할을 분리해서 설명하세요.</p>
+                
+                <ul>
+                    <li><a href="#" onclick="highlightFields(['row-from', 'row-to', 'row-value']); updateAlert('input'); return false;"><strong>[입력값 - Input] From, To, Value</strong></a>: 사용자가 지갑에서 서명하여 네트워크에 보낸 원래의 목적값입니다.</li>
+                    <li><a href="#" onclick="highlightFields(['row-fee']); updateAlert('process'); return false;"><strong>[처리과정 - Process] Tx Fee</strong></a>: 네트워크 검증자들이 연산을 수행하기 위해 소모한 가스 비용(자원 사용료)입니다.</li>
+                    <li><a href="#" onclick="highlightFields(['row-status']); updateAlert('output'); return false;"><strong>[출력값 - Output] Status</strong></a>: 처리 완료 후 최종 반영된 결과(Success / Fail) 상태 값입니다.</li>
+                </ul>
+            </div>
+
+            <!-- 3단계: 의도적 오류 및 위험 사례 시연 -->
+            <div id="step3" class="tab-content">
+                <h3>⚠️ 의도적 오류 및 위험 사례 시연</h3>
+                <p><strong>시나리오:</strong> 사용자가 가스비(Fee) 한도를 너무 낮게 설정하여 네트워크 처리 중 가스가 고갈된 위험 상황(Out of Gas)을 강제로 연출합니다.</p>
+                
+                <div class="btn-box">
+                    <button class="btn btn-danger" onclick="triggerError()">🚨 오류 상황 발생 시뮬레이션</button>
+                    <button class="btn btn-success" onclick="resetExplorer()">🔄 정상 상태 복구</button>
+                </div>
+                <div class="box-info" style="background-color: #fff7ed; border-left-color: var(--warning); margin-top:15px;">
+                    <strong>💡 강사 핵심 코멘트:</strong> "보십시오! 가스가 부족해 Status는 <strong>Fail</strong>로 바뀌었고 Value(0.05ETH)는 전송되지 않고 원위치 되었지만, 이미 검증자가 연산에 사용한 <strong>수수료(Fee)는 소멸하여 돌려받지 못했습니다.</strong>"
+                </div>
+            </div>
+
+            <!-- 4단계: 학습자 재설명 복기 -->
+            <div id="step4" class="tab-content">
+                <h3>🗣️ 학습자 재설명 및 복기 단계</h3>
+                <p>시연이 끝났습니다. 이제 화면을 번갈아 보며 학습자들에게 질문을 던지세요.</p>
+                <div class="box-info" style="background-color: #f0fdf4; border-left-color: var(--success);">
+                    <strong>📢 학생 유도 발문:</strong><br>
+                    "자, 이제 화면을 보고 본인의 말로 다시 설명해 볼 시간입니다. 방금 보았던 오류 상황에서 <strong>1) 입력값인 Value</strong>와 <strong>2) 처리 과정의 Fee</strong>, 그리고 <strong>3) 출력값인 Status</strong>가 각각 어떻게 변했는지 순서대로 옆 사람에게 설명해 보세요."
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // 탭 전환 기능
+    function openTab(evt, stepId) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(stepId).style.display = "block";
+        document.getElementById(stepId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        
+        // 탭 바뀔 때 하이라이트 및 상태 리셋 도움
+        removeHighlights();
+    }
+
+    // 특정 행 하이라이트 기능
+    function highlightFields(ids) {
+        removeHighlights();
+        ids.forEach(id => {
+            document.getElementById(id).classList.add('highlight');
+        });
+    }
+
+    function removeHighlights() {
+        const rows = document.querySelectorAll('.tx-row');
+        rows.forEach(row => row.classList.remove('highlight'));
+    }
+
+    // 입/처/출 설명 업데이트
+    function updateAlert(type) {
+        const alertBox = document.getElementById('status-alert');
+        if(type === 'input') {
+            alertBox.innerHTML = "<strong>[입력값 설명 중]</strong> 누가(From) 누구에게(To) 얼마(Value)를 보낼 것인지 정의하는 최초의 데이터입니다.";
+            alertBox.style.borderLeftColor = "var(--primary)";
+        } else if(type === 'process') {
+            alertBox.innerHTML = "<strong>[처리과정 설명 중]</strong> 이 트랜잭션이 블록에 포함되기 위해 가상머신(EVM) 내 연산 엔진을 가동시킨 연산 비용(Fee)입니다.";
+            alertBox.style.borderLeftColor = "var(--warning)";
+        } else if(type === 'output') {
+            alertBox.innerHTML = "<strong>[출력값 설명 중]</strong> 연산 결과 처리가 정상 반영되었는지(Success) 혹은 실패했는지(Fail) 최종 도출된 장부의 기록 상태입니다.";
+            alertBox.style.borderLeftColor = "var(--success)";
+        }
+    }
+
+    // 의도적 오류 연출
+    function triggerError() {
+        removeHighlights();
+        // 값 변동 연출
+        document.getElementById('val-status').innerHTML = '<span class="badge badge-danger">Fail (Out of Gas)</span>';
+        document.getElementById('val-value').innerHTML = '0 ETH <small style="color:gray;">(원금 반환됨)</small>';
+        document.getElementById('val-fee').innerHTML = '0.0021 ETH <small style="color:red;">(수수료만 전액 소모됨)</small>';
+        
+        // 관련 항목 하이라이트
+        highlightFields(['row-status', 'row-value', 'row-fee']);
+        
+        const alertBox = document.getElementById('status-alert');
+        alertBox.innerHTML = "<strong>🚨 위험 사례 발생: Out of Gas!</strong><br>수수료 한도가 낮아 연산 도중 중단되었습니다. 출력값(Status)은 Fail이 되었으며, 입력했던 원금(Value)은 복구되었으나 처리 비용(Fee)은 강제로 소멸되었습니다.";
+        alertBox.style.borderLeftColor = "var(--danger)";
+    }
+
+    // 정상 상태 복구
+    function resetExplorer() {
+        removeHighlights();
+        document.getElementById('val-status').innerHTML = '<span class="badge badge-success">Success</span>';
+        document.getElementById('val-value').innerHTML = '0.05 ETH';
+        document.getElementById('val-fee').innerHTML = '0.0021 ETH';
+        
+        const alertBox = document.getElementById('status-alert');
+        alertBox.innerHTML = "🔄 정상 상태로 복구되었습니다. 다시 실습을 진행할 수 있습니다.";
+        alertBox.style.borderLeftColor = "#cbd5e1";
+    }
+</script>
+
+</body>
+</html>
