@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>김태경 생맥주집 | 인생의 가장 시원한 순간</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Space+Grotesk:wght@600&amp;family=Work+Sans:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed-dim": "#ffb68c",
+            "tertiary-fixed": "#d5e5ef",
+            "on-secondary-fixed-variant": "#753401",
+            "primary-container": "#ffb100",
+            "on-surface": "#191c1d",
+            "tertiary-container": "#b3c3cd",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#415159",
+            "on-tertiary": "#ffffff",
+            "outline-variant": "#d6c4ac",
+            "inverse-surface": "#2e3132",
+            "surface-container-high": "#e7e8e9",
+            "error-container": "#ffdad6",
+            "background": "#f8f9fa",
+            "on-tertiary-fixed": "#0e1d25",
+            "secondary-fixed": "#ffdbc9",
+            "on-primary-fixed": "#281800",
+            "secondary-container": "#ffa26a",
+            "on-surface-variant": "#514533",
+            "surface-tint": "#7f5600",
+            "surface-variant": "#e1e3e4",
+            "surface-container-low": "#f3f4f5",
+            "primary-fixed": "#ffdeae",
+            "secondary": "#934b19",
+            "inverse-on-surface": "#f0f1f2",
+            "surface-dim": "#d9dadb",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#ffba3f",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#b9c9d3",
+            "error": "#ba1a1a",
+            "on-secondary-fixed": "#321200",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-container": "#6a4700",
+            "surface-container-highest": "#e1e3e4",
+            "surface": "#f8f9fa",
+            "surface-bright": "#f8f9fa",
+            "on-background": "#191c1d",
+            "on-primary-fixed-variant": "#604100",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#783603",
+            "outline": "#847560",
+            "on-tertiary-fixed-variant": "#3a4951",
+            "inverse-primary": "#ffba3f",
+            "primary": "#7f5600",
+            "surface-container": "#edeeef",
+            "tertiary": "#516169"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "container-max": "1200px",
+            "margin-desktop": "48px",
+            "gutter": "24px",
+            "margin-mobile": "16px",
+            "base": "8px"
+          },
+          "fontFamily": {
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-caps": ["Space Grotesk"],
+            "body-lg": ["Work Sans"],
+            "body-md": ["Work Sans"]
+          },
+          "fontSize": {
+            "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+            "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: theme('colors.background');
+      color: theme('colors.on-background');
+      scroll-behavior: smooth;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .glass-nav {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .freshness-pulse {
+      width: 8px;
+      height: 8px;
+      background-color: theme('colors.primary-container');
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 rgba(255, 177, 0, 0.4);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 177, 0, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 177, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 177, 0, 0); }
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: theme('spacing.gutter');
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopNavBar (JSON Managed) -->
+<header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-sm border-b border-outline-variant/30">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-20">
+<div class="font-headline-md text-headline-md font-extrabold text-primary tracking-tight">
+        김태경 생맥주집
+      </div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1 transition-colors duration-300" href="#">About</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Menu</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Location</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Reservations</a>
+</nav>
+<button onclick="openReservationModal()" class="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-6 py-3 rounded-lg active:scale-95 duration-150 shadow-sm hover:brightness-105 transition-all">
+        Book a Table
+      </button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center scale-105 animate-[ken-burns_20s_infinite_alternate]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD1TQyu2sQcZpXpG0bD9-9ZLPjGIQ0crGL2M3Lowv9GUFpZ39FNyTmdYEr7jbU9kRwsZYzAcm0ez_U0IJws89OyiDWZfWZG6pEx845gjZ-PPF2GeTDTcR5h39dzcZlPITUf2u9kFNRYQ9PZ-k_Y9BXmTFUuIVwowrgvTGh3Tt1bJ0XaITL96M4B1HOGFqAPaZCQNjKSpzAYW9vgeX3hCfeHNAMmvBixTuM8joPOe_9i7ECyurgjKTesl-Xig7GKhOojvmZl8EsuQg')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full text-white">
+<div class="max-w-2xl">
+<span class="font-label-caps text-label-caps tracking-[0.2em] text-primary-container mb-4 block uppercase">The Ultimate Refreshment</span>
+<h1 class="font-headline-xl text-headline-xl mb-6 leading-tight">
+            인생의 가장 시원한 순간,<br/>
+<span class="text-primary-container">김태경 생맥주</span>
+</h1>
+<p class="font-body-lg text-body-lg mb-10 text-surface-variant/90 leading-relaxed">
+            매일 관리되는 최상의 신선도와 깊은 풍미를 경험하세요.<br class="hidden md:block"/>
+            엄격한 퀄리티 컨트롤을 거친 진짜 크래프트 비어를 제공합니다.
+          </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button onclick="openReservationModal()" class="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-10 py-4 rounded-lg shadow-xl hover:translate-y-[-2px] transition-all duration-300">
+              지금 예약하기
+            </button>
+<button class="border border-white/30 backdrop-blur-md text-white font-label-caps text-label-caps px-10 py-4 rounded-lg hover:bg-white/10 transition-all duration-300">
+              메뉴 둘러보기
+            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Freshness Section (The "Why") -->
+<section class="py-24 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">The Freshness Standard</h2>
+<div class="w-20 h-1 bg-primary-container mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Item 1 -->
+<div class="bg-surface-container p-10 rounded-2xl border border-outline-variant/20 hover:border-primary-container/40 transition-all duration-500 group">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">ac_unit</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">0°C Cold Storage</h3>
+<p class="font-body-md text-on-surface-variant">맥주의 맛을 결정하는 가장 중요한 요소인 온도. 최적의 0도 보관 시스템으로 첫 모금부터 끝까지 완벽한 상쾌함을 유지합니다.</p>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container p-10 rounded-2xl border border-outline-variant/20 hover:border-primary-container/40 transition-all duration-500 group">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">cleaning_services</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Daily Line Cleaning</h3>
+<p class="font-body-md text-on-surface-variant">매일 마감 후 진행되는 엄격한 관 세척 루틴. 잡미 없는 순수한 맥주 본연의 아로마를 매일 아침 새롭게 전달합니다.</p>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container p-10 rounded-2xl border border-outline-variant/20 hover:border-primary-container/40 transition-all duration-500 group">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">liquor</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4">Expert Pouring</h3>
+<p class="font-body-md text-on-surface-variant">45도 각도, 최적의 탄산 배출을 고려한 숙련된 비어 마스터의 푸어링. 완벽한 헤드(거품) 비율이 풍미를 가두어줍니다.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Menu Highlight Section -->
+<section class="py-24 bg-background">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-widest">Our Selection</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-2">Signature Drafts</h2>
+</div>
+<a class="font-label-caps text-label-caps text-primary flex items-center gap-2 hover:translate-x-2 transition-transform" href="#">
+            전체 메뉴 보기 <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="relative group overflow-hidden rounded-2xl bg-surface-container-high shadow-lg">
+<div class="aspect-[3/4] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A macro close-up of a tall glass of Golden Lager beer with a thick creamy head of foam, condensation droplets running down the side, set against a warm industrial pub background with amber lighting. Minimalist and high-end photographic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQdsNmMCBSIyLUupknkEfzuh2C04G_LziHwR5ftRs-n_iz3GVJpgrV9cI_TJpR85oSDmbW4vuBEPAJnvqC350ignpO65aoMveGmN0cUulKEEgT12NaaMOvug_gotpj-EJcUzcb6MCqTATYxafqfGlZMorCii1pElliFqw4Ny7OyErHF1EZ1mM-jowEZA_He5W5_4oz4n-BN7gsBOjYXdgsjSjOh0i_3Fc-ya6j1RYFJCUWhtFQeun4b3bRhKFv5hDvZCp4MXzadQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+</div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-white">
+<div class="flex items-center gap-2 mb-2">
+<div class="freshness-pulse"></div>
+<span class="font-label-caps text-[12px] uppercase text-primary-container">Just Tapped</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1">Golden Lager</h3>
+<p class="font-label-caps text-label-caps text-white/70 mb-4">ABV 4.5% | Refreshing &amp; Crisp</p>
+<div class="pt-4 border-t border-white/20">
+<p class="font-body-md text-white/90">Pairing: <span class="text-primary-container">Crispy Fried Chicken</span></p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="relative group overflow-hidden rounded-2xl bg-surface-container-high shadow-lg">
+<div class="aspect-[3/4] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A premium dark Stout beer in a branded glass showing a cascading creamy head, dark roasted colors of coffee and chocolate tones, set in a sophisticated modern pub environment with dark wooden textures. Sophisticated and rich mood lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH8sgkrJyumlcudHYTaTmLkDjUOc8OadNsEbrTQq5YDIAmX8yKTO6KYTwXBT7AS1yivKrt2s4tGMEglwbRELNRRvT0cTLzGzQVnkznqer1X2PiRsH91__-7Rqh4Y3WZA2AKZcyrWVpjOIcVjrBaJgHMKKC-2odoF4ETqu6zHyWNNCHjSioWc4kBw4kVfiZPVkjcGUUzjINfTVwpF3u2BpaniikEzaUGIClaAQsFp-ALOTi-YQCtIk83tWBUN8Ig8OAKlCC3yq5ew"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+</div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-white">
+<h3 class="font-headline-md text-headline-md mb-1">Creamy Stout</h3>
+<p class="font-label-caps text-label-caps text-white/70 mb-4">ABV 5.2% | Coffee &amp; Chocolate</p>
+<div class="pt-4 border-t border-white/20">
+<p class="font-body-md text-white/90">Pairing: <span class="text-primary-container">Smoked BBQ Platter</span></p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="relative group overflow-hidden rounded-2xl bg-surface-container-high shadow-lg">
+<div class="aspect-[3/4] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A vibrant amber-colored Sunset Ale with a medium head of foam, bright lighting capturing the orange and copper hues of the beer, professional studio food photography style with a focus on texture and refreshment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1l2kjPhSCJvzzmhununx2lKQIzTgnprbNOElLA7dZ4iM-tlCo_2Bdq7KG-TZspTLQiS-cjwkrfTnWVnn3kHpb6Hk0Rt2f-eUFIgm2qH5a5MfzDU0le8hFn-uE1udxLK3JUQbk1qqQTEIf_gSl5Z1zRwAT_QFZGkJ6UnTJSWu2kXeMuEuNsRSYHTi7PnlMvQuI087qhxCp73U59kxldPeF6hnfjumG15cIuTdzvM0R_m__5dXyRPDde1eMsqZbk7PQ9cl9E3A8Yg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+</div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-white">
+<h3 class="font-headline-md text-headline-md mb-1">Sunset Ale</h3>
+<p class="font-label-caps text-label-caps text-white/70 mb-4">ABV 6.0% | Citrusy &amp; Bold</p>
+<div class="pt-4 border-t border-white/20">
+<p class="font-body-md text-white/90">Pairing: <span class="text-primary-container">Grilled Seafood Skewers</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Atmosphere Gallery -->
+<section class="py-24 bg-surface-container-low overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Modern Industrial Space</h2>
+<p class="font-body-md text-on-surface-variant mt-2">도시적인 감각과 따뜻한 아날로그 조명이 공존하는 공간입니다.</p>
+</div>
+<div class="bento-grid h-[600px]">
+<div class="col-span-12 md:col-span-8 rounded-3xl overflow-hidden shadow-md relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Wide angle shot of a modern industrial pub interior with exposed brick walls, sleek wooden tables, and warm Edison bulb lighting. A vibrant social atmosphere with diverse groups of people enjoying drinks. High-end architectural photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlPb6QYQ6vWOdmdEwRKLHg9YVAhyftD4OBv4VemJonYwvSmvzC6RCAUdyDVSQ0XKTjDWcO175nU3UdY_xghBImkxILsXVWgoV2CYMiH2RLoUL2VXxjdnHOBOiej2u20eYQy4Kc8nOjmUepcyVA11Jr_nlpJ6pMNlbfC86PYG8F1CCebkGW-GbBInDbNz9eNT7tzW58cfaenZzW0TA38pOOYbCrw62dEd22cn7fHrnD3coqNVP-VNGjX2CPAKR5Mem662VjPDzUnw"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+</div>
+<div class="col-span-6 md:col-span-4 rounded-3xl overflow-hidden shadow-md relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A close-up detail of the beer tap system in a professional brewery pub, stainless steel industrial design with multiple tap handles and glowing indicator lights. Pristine cleanliness and modern craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjeZFfWYddRHKVAMMU-7WOrHzqLuYNRoyXMS_w_qYTv1gAmK4VG27TU3L5DQAG1sK6XCNUfXkfMRSP1WBwwRTJ7gcGoJgy8uoox7zt1xelcDVys2o8QoItnRby8RuCPsfF9dSg0LCuiuHOnJsTYo0sf_6nUYfmUJmmvoEZcxQHyvpGjRC-KsWzm7jLr7D6HH1cnOhOEYlwDLVY_STyAUzxS6Mlg9k4e4qEBfrVWOseo1YgRfRpiy468qCQeGQyuesQ974w1hG-pw"/>
+</div>
+<div class="col-span-6 md:col-span-4 rounded-3xl overflow-hidden shadow-md relative group mt-[-100px] md:mt-0">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Detail of a stylish pub table with a half-full glass of cold beer and a minimalist menu, evening light filtering through the window, creating a serene and inviting atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEYiZRHHQenGP9lrsy7X7HAMItNeJDbjdOi9olevfwzykrnQo1YGBgqStt0_iNkouI0KKoQcGT-uOpOJVK-9NPji7ZbGh_G83FkYZ0f-XiMfo6WDwbaiI1kPpB_5PguT0nX31FmXb-XZFjZqe0WkrA5F29Bc01sxvaQRYi8brB9MHkF7Nrbh8BtrexRGhVphzK6CWnKu6pX-1amVDr3ooCgnYk9OTgBfw2tIRTv4bsgIIzlL76bb6DdCpMtkO9EG67BrhV7hAM3Q"/>
+</div>
+<div class="hidden md:block md:col-span-8 rounded-3xl overflow-hidden shadow-md relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A night-time exterior view of a stylish modern Korean pub called Kim Tae-kyung Draft Beer Pub, featuring a minimalist glass facade and warm interior lighting that spills onto the sidewalk. Vibrant urban lifestyle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhLzfwcOao_jdFGpI0fdVsaUxxoIwVmRJ2BOml8Elb9RmGxtmKhC80dMmHXc3lSdaclGJ7-py6rjy3lu_xzqJmfa50NR-JQMLc-J0NX2ixVH8k2TqsXIV0hiGY2tqlhTIV7OlqwxyYmvKdblG8N1A7yq3sOr5kKmp35Iy0EJUa2WY5ZNWc0BCTWygqFsVkLMu_2E_JCxJqD_FYTchAGBF7mA_jhMJt2yJ42ytfOi1DDJxffmNudXaVwnASB9AB59IIqMKwsNXDpQ"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Location / Reservation CTA -->
+<section class="py-24 relative">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-on-tertiary-fixed opacity-10"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
+<h2 class="font-headline-xl text-headline-xl mb-8">Ready for a Drink?</h2>
+<p class="font-body-lg text-body-lg max-w-2xl mx-auto mb-12 text-on-surface-variant">
+          오늘 하루의 마무리를 '김태경 생맥주집'에서 함께하세요.<br/>
+          신선한 맥주와 훌륭한 다이닝이 당신을 기다립니다.
+        </p>
+<div class="flex flex-col items-center gap-6">
+<button onclick="openReservationModal()" class="bg-primary text-on-primary font-label-caps text-label-caps px-12 py-5 rounded-full shadow-2xl hover:bg-on-primary-fixed-variant transition-colors flex items-center gap-3">
+<span class="material-symbols-outlined">event_available</span>
+            지금 예약하기
+          </button>
+<div class="flex items-center gap-8 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span class="font-label-caps text-label-caps">강남구 신사동 123-45</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">call</span>
+<span class="font-label-caps text-label-caps">02-1234-5678</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (JSON Managed) -->
+<footer class="bg-on-tertiary-fixed text-secondary-fixed w-full">
+<div class="flex flex-col md:flex-row justify-between items-center py-12 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="mb-8 md:mb-0">
+<div class="font-headline-md text-headline-md text-primary-fixed mb-4">김태경 생맥주집</div>
+<p class="font-body-md text-body-md text-tertiary-fixed-dim/70 max-w-sm">
+          © 2024 Kim Tae-kyung Draft Beer Pub. Crafted for Refreshment.
+        </p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-6">
+<a class="font-label-caps text-label-caps text-tertiary-fixed-dim/70 hover:text-primary-fixed transition-all" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-tertiary-fixed-dim/70 hover:text-primary-fixed transition-all" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-tertiary-fixed-dim/70 hover:text-primary-fixed transition-all" href="#">Career</a>
+<a class="font-label-caps text-label-caps text-tertiary-fixed-dim/70 hover:text-primary-fixed transition-all" href="#">Contact</a>
+</div>
+<div class="mt-8 md:mt-0 flex gap-4">
+<div class="w-10 h-10 rounded-full border border-tertiary-fixed-dim/30 flex items-center justify-center hover:bg-primary-fixed hover:text-on-tertiary-fixed transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-tertiary-fixed-dim/30 flex items-center justify-center hover:bg-primary-fixed hover:text-on-tertiary-fixed transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">language</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Simple micro-interaction for scrolling navbar opacity
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('shadow-md');
+        header.classList.replace('bg-surface/90', 'bg-surface/95');
+      } else {
+        header.classList.remove('shadow-md');
+        header.classList.replace('bg-surface/95', 'bg-surface/90');
+      }
+    });
+
+    // Reveal animations on scroll
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section > div').forEach(el => {
+      el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+      observer.observe(el);
+    });
+
+    // 예약 모달 제어 함수
+    function openReservationModal() {
+      document.getElementById('reservationModal').classList.remove('hidden');
+      document.getElementById('reservationModal').classList.add('flex');
+    }
+
+    function closeReservationModal() {
+      document.getElementById('reservationModal').classList.add('hidden');
+      document.getElementById('reservationModal').classList.remove('flex');
+    }
+
+    // 예약 폼 제출 (Node.js 백엔드 API 연동)
+    async function handleReservationSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = {
+        name: form.name.value,
+        phone: form.phone.value,
+        date: form.date.value,
+        time: form.time.value,
+        guests: form.guests.value
+      };
+
+      try {
+        const response = await fetch('/api/reservation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          alert(`🎉 예약이 성공적으로 완료되었습니다!\n예약 번호: ${result.reservation.id}\n성함: ${result.reservation.name}님 (${result.reservation.guests}명)\n일시: ${result.reservation.date} ${result.reservation.time}`);
+          closeReservationModal();
+          form.reset();
+        } else {
+          alert('예약 실패: ' + result.message);
+        }
+      } catch (err) {
+        alert('서버 통신 오류가 발생했습니다.');
+      }
+    }
+  </script>
+
+  <!-- 예약 모달 UI (Material Design / Amber Theme) -->
+  <div id="reservationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden justify-center items-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant/30 rounded-2xl max-w-md w-full p-8 shadow-2xl relative">
+      <button onclick="closeReservationModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface text-2xl font-bold">&times;</button>
+      <div class="flex items-center gap-3 mb-6">
+        <span class="material-symbols-outlined text-primary text-3xl">event_available</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">테이블 예약하기</h3>
+      </div>
+      <form onsubmit="handleReservationSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">예약자 성함</label>
+          <input type="text" name="name" required placeholder="홍길동" class="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:border-primary">
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">연락처</label>
+          <input type="tel" name="phone" required placeholder="010-1234-5678" class="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:border-primary">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">예약 날짜</label>
+            <input type="date" name="date" required class="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">예약 시간</label>
+            <select name="time" required class="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:border-primary">
+              <option value="17:00">17:00</option>
+              <option value="18:00">18:00</option>
+              <option value="19:00">19:00</option>
+              <option value="20:00">20:00</option>
+              <option value="21:00">21:00</option>
+              <option value="22:00">22:00</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">방문 인원 수</label>
+          <select name="guests" required class="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:border-primary">
+            <option value="2">2명</option>
+            <option value="3">3명</option>
+            <option value="4">4명</option>
+            <option value="5~6">5~6명</option>
+            <option value="7명 이상">7명 이상 (단체)</option>
+          </select>
+        </div>
+        <div class="pt-4 flex justify-end gap-3">
+          <button type="button" onclick="closeReservationModal()" class="px-6 py-3 rounded-lg border border-outline text-on-surface hover:bg-surface-container">취소</button>
+          <button type="submit" class="px-8 py-3 rounded-lg bg-primary-container text-on-primary-container font-label-caps text-label-caps shadow-md hover:brightness-105">예약 완료</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body></html>
